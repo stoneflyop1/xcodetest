@@ -80,8 +80,10 @@ void testShapes() {
     NSLog(@"The rectangle origin is: %@", r.origin); //NSObject.description
     
     s = [Square new];
+    s.origin = p;
     [s setSide:5];
     [s print];
+    NSLog(@"The square origin is: %@", s.origin); //NSObject.description
 }
 
 void testNSNumbers() {
@@ -143,7 +145,7 @@ void testNSArrays() {
     muArray = [NSMutableArray array];
     
     NSLog(@"Month\tName");
-    for (i = 0; i < 12; i++) {
+    for (i = 0; i < [months count]; i++) {
         muArray[i] = months[i];
         NSLog(@"%2i\t%@", i+1, [months objectAtIndex:i]); //months[i]
     }

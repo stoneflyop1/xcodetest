@@ -14,16 +14,12 @@
     Point2D *origin;
 }
 
-@synthesize width, height;
+@synthesize width, height, origin;
 
 -(void) setWidth:(int)w height:(int)h{
     width= w;
     height = h;
     
-}
-
--(Point2D *)origin {
-    return origin;
 }
 
 -(void)setOrigin:(Point2D *)o {

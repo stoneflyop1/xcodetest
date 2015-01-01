@@ -18,6 +18,11 @@
     x = xVal;
     y = yVal;
 }
+-(id)copyWithZone:(NSZone *)zone {
+    Point2D *copy = [Point2D new];
+    [copy setX: self.x andY:self.y];
+    return copy;
+}
 
 -(NSString*)description {
     return [NSString stringWithFormat: @"X=%i, Y=%i", x, y];

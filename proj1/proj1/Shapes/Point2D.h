@@ -11,11 +11,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Point2D : NSObject
+@interface Point2D : NSObject <NSCopying>
 
 @property int x, y;
 
 -(void) setX: (int) xVal andY:(int) yVal;
+
+-(id)copyWithZone:(NSZone *)zone; //invalid exception...NSString implement this function
 
 @end
 

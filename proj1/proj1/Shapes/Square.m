@@ -11,6 +11,8 @@
 
 @implementation Square
 
+@synthesize origin;
+
 -(void) setSide:(int)s {
     [self setWidth:s height:s];
 }

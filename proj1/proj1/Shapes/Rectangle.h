@@ -16,8 +16,8 @@
 @interface Rectangle : NSObject
 
 @property int width, height;
+@property (copy, nonatomic) Point2D* origin;
 
--(Point2D *)origin;
 -(void)setOrigin:(Point2D *)o;
 -(int) area;
 -(int) perimeter;
