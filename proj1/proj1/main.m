@@ -16,6 +16,7 @@ void testNumbers();
 void testShapes();
 void testNSNumbers();
 void testNSStrings();
+void testNSArrays();
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -31,6 +32,9 @@ int main(int argc, const char * argv[]) {
         
         NSLog(@"\nTest NSStrings start...");
         testNSStrings();
+        
+        NSLog(@"\nTest NSArrays start...");
+        testNSArrays();
         
     }
     return 0;
@@ -124,4 +128,24 @@ void testNSStrings() {
     NSLog(@"%@", muStr);
     [muStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range: NSMakeRange(0, muStr.length)];
     NSLog(@"Without spaces: %@", muStr);
+}
+
+void testNSArrays() {
+    int i;
+    NSArray *months = @[@"Jannuary", @"February", @"March", @"April",
+                         @"May", @"June", @"July", @"August", @"September",
+                         @"October", @"November", @"December"];
+    /*
+    NSArray *months = [NSArray arrayWithObjects:@"Jannuary", @"February", @"March", @"April",
+                                          @"May", @"June", @"July", @"August", @"September",
+                       @"October", @"November", @"December", nil];*/
+    NSMutableArray *muArray;
+    muArray = [NSMutableArray array];
+    
+    NSLog(@"Month\tName");
+    for (i = 0; i < 12; i++) {
+        muArray[i] = months[i];
+        NSLog(@"%2i\t%@", i+1, [months objectAtIndex:i]); //months[i]
+    }
+    NSLog(@"Mutable Array: %@", muArray);
 }
