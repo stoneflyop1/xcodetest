@@ -12,26 +12,45 @@
 #import "Rectangle.h"
 #import "Square.h"
 
+void testNumbers();
+void testShapes();
+void testNSNumbers();
+void testNSStrings();
+
+int main(int argc, const char * argv[]) {
+    @autoreleasepool {
+        
+        NSLog(@"\nTest Numbers start...");
+        testNumbers();
+        
+        NSLog(@"\nTest Shapes start...");
+        testShapes();
+        
+        NSLog(@"\nTest NSNumbers start...");
+        testNSNumbers();
+        
+        NSLog(@"\nTest NSStrings start...");
+        testNSStrings();
+        
+    }
+    return 0;
+}
+
 void testNumbers() {
     Fraction *aF;
     Fraction *bF;
     Fraction *cF;
     
     NSLog(@"Fraction Count: %i", [Fraction count]);
-    //myFraction = [[Fraction alloc] init];
     aF = [[Fraction allocF] init];
     NSLog(@"Fraction Count: %i", [Fraction count]);
     bF = [[Fraction allocF] init];
     NSLog(@"Fraction Count: %i", [Fraction count]);
     [aF setTo:6 over:8];
     [bF setTo:5 over:9];
-    //myFraction.numerator = 1.0;
-    //myFraction.denominator = 3.0;
     
     [aF print];
-    
     [aF reduce];
-    
     [aF print];
     
     cF = [aF add: bF];
@@ -46,8 +65,6 @@ void testShapes() {
     Rectangle *r;
     Square *s;
     
-    
-    
     p = [Point2D new];
     [p setX:10 andY:10];
     
@@ -56,23 +73,55 @@ void testShapes() {
     [r setOrigin:p];
     
     [r print];
-    NSLog(@"The rectangle origin is: %@", r.origin);
+    NSLog(@"The rectangle origin is: %@", r.origin); //NSObject.description
     
     s = [Square new];
     [s setSide:5];
     [s print];
 }
 
-int main(int argc, const char * argv[]) {
-    @autoreleasepool {
-        
-        NSLog(@"\nTest Numbers start...");
-        testNumbers();
-        
-        NSLog(@"\nTest Shapes start...");
-        testShapes();
-        
-        
-    }
-    return 0;
+void testNSNumbers() {
+    
+    NSNumber *myNumber, *floatNumber, *intNumber;
+    NSInteger myInt;
+    
+    intNumber = @200; //[NSNumber numberWithInt:200];
+    myInt = [intNumber integerValue];
+    NSLog(@"%i", (int)myInt); //Must use the cast...
+    
+    myNumber = [NSNumber numberWithLong:0xabcdef];
+    NSLog(@"%lx", [myNumber longValue]);
+    
+    floatNumber = [NSNumber numberWithFloat:200.00];
+    NSLog(@"%g", [floatNumber floatValue]);
+    
+    int compareValue = [intNumber compare:floatNumber];
+    NSLog(@"%li compared %f is %i", (long)[intNumber integerValue], floatNumber.floatValue, compareValue);
+    
+}
+
+void testNSStrings() {
+    NSString *constString = @"Programming Is Fun"; // NSConstantString is subclass of NSString
+    NSString *res, *rangeString;
+    NSComparisonResult comRes;
+    NSRange subRange;
+    NSMutableString *muStr;
+    
+    res = [constString lowercaseString];
+    comRes = [constString caseInsensitiveCompare:res];
+    NSLog(@"Original String: %@", constString); //need to use %@ to print NSString, NSNumber etc. (NSObject)
+    NSLog(@"Lowercase String: %@", res);
+    NSLog(@"\"%@ \"is caseinsensitive with \"%@\": %li", constString, res, comRes);
+    
+    rangeString = @"Is Fun";
+    subRange = [constString rangeOfString:rangeString];
+    NSLog(@"range location:%lu, length:%lu of %@ from %@", (unsigned long)subRange.location, (unsigned long)subRange.length, rangeString, constString);
+    
+    muStr = [NSMutableString stringWithString:@"\nCamelCase String:"];
+    [muStr appendString:constString];
+    [muStr insertString:@"\nlowercase String:" atIndex:muStr.length];
+    [muStr appendString:res];
+    NSLog(@"%@", muStr);
+    [muStr replaceOccurrencesOfString:@" " withString:@"" options:NSLiteralSearch range: NSMakeRange(0, muStr.length)];
+    NSLog(@"Without spaces: %@", muStr);
 }
