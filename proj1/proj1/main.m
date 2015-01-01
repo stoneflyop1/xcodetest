@@ -17,6 +17,7 @@ void testShapes();
 void testNSNumbers();
 void testNSStrings();
 void testNSArrays();
+void testDictionary();
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -35,6 +36,9 @@ int main(int argc, const char * argv[]) {
         
         NSLog(@"\nTest NSArrays start...");
         testNSArrays();
+        
+        NSLog(@"\nTest NSDictionary start...");
+        testDictionary();
         
     }
     return 0;
@@ -150,4 +154,31 @@ void testNSArrays() {
         NSLog(@"%2i\t%@", i+1, [months objectAtIndex:i]); //months[i]
     }
     NSLog(@"Mutable Array: %@", muArray);
+}
+
+void testDictionary() {
+    NSDictionary *states = @{@"Hebei":@"Shijiazhuang",
+                                 @"Jiangsu":@"Nanjing",
+                                 @"Shandong":@"Jinan"};
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    NSArray *keys = [states allKeys];
+    keys = [keys sortedArrayUsingComparator:
+            ^(id obj1, id obj2) {
+                return [obj2 compare:obj1];
+            }];
+    for (NSString *k in keys) {
+        dict[k] = states[k];
+        NSLog(@"State: %@ Capital: %@", k, [states objectForKey:k]);
+    }
+    
+    keys = [dict allKeys];
+    keys = [keys sortedArrayUsingComparator:
+            ^(id obj1, id obj2) {
+                return [obj1 compare:obj2];
+            }];
+    for (NSString *k in keys) {
+        NSLog(@"State: %@ Capital: %@", k, [dict objectForKey:k]);
+    }
+    
 }
