@@ -18,6 +18,8 @@ void testNSNumbers();
 void testNSStrings();
 void testNSArrays();
 void testDictionary();
+void testFileIOs();
+void testDirectory();
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -39,6 +41,12 @@ int main(int argc, const char * argv[]) {
         
         NSLog(@"\nTest NSDictionary start...");
         testDictionary();
+        
+        NSLog(@"\nTest File IO...");
+        testFileIOs();
+        
+        NSLog(@"\nTest Directory...");
+        testDirectory();
         
     }
     return 0;
@@ -181,4 +189,71 @@ void testDictionary() {
         NSLog(@"State: %@ Capital: %@", k, [dict objectForKey:k]);
     }
     
+}
+
+void testFileIOs() {
+    NSFileManager *fileManager;
+    NSData *data, *content;
+    NSString *file1, *file2, *currentDir, *path;
+    NSDictionary *atts;
+    NSDirectoryEnumerator *dirEnumerator;
+    BOOL ok;
+    file1 = @"file1";
+    file2 = @"file2.txt";
+    
+    fileManager = [NSFileManager defaultManager];
+    data = [@"Test Data..." dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"creating file1...");
+    ok = [fileManager createFileAtPath:file1 contents:data attributes:NULL];
+    if (ok == NO) {
+        NSLog(@"create file failed...");
+        return;
+    }
+    
+    NSLog(@"get contents from file1...");
+    content = [fileManager contentsAtPath:file1];
+    NSLog(@"file1 contents: %@", content);
+    NSLog(@"file1 string contents: %@", [NSString stringWithContentsOfFile:file1 encoding:NSUTF8StringEncoding error:NULL]);
+    
+    atts = [fileManager attributesOfItemAtPath:file1 error:NULL];
+    NSLog(@"file1 attributes: %@", atts);
+    
+    NSLog(@"copy file1 to file2...");
+    ok = [fileManager copyItemAtPath:file1 toPath:file2 error:NULL];
+    if (!ok) {
+        NSLog(@"copy file failed...");
+    }
+    
+    currentDir = [fileManager currentDirectoryPath];
+    dirEnumerator = [fileManager enumeratorAtPath:currentDir];
+    NSLog(@"Enumerate directory...");
+    while ((path=[dirEnumerator nextObject]) != nil) {
+        NSLog(@"%@", path);
+    }
+    NSLog(@"Directory Contents...");
+    for (path in [fileManager contentsOfDirectoryAtPath:currentDir error:NULL]) {
+        NSLog(@"%@", path);
+    }
+    
+    NSLog(@"remove file2...");
+    ok = [fileManager removeItemAtPath:file2 error:NULL];
+    if (!ok) {
+        NSLog(@"remove file2 failed...");
+    }
+    NSLog(@"remove file1...");
+    ok = [fileManager removeItemAtPath: file1 error:NULL];
+    if (!ok) {
+        NSLog(@"remove file1 failed...");
+    }
+    
+}
+
+void testDirectory() {
+    
+    NSArray *dirList;
+    
+    dirList = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSLog(@"Documents:\n%@", dirList);
 }
