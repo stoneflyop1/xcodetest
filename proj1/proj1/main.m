@@ -20,6 +20,7 @@ void testNSArrays();
 void testDictionary();
 void testFileIOs();
 void testDirectory();
+void testURL();
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -47,6 +48,9 @@ int main(int argc, const char * argv[]) {
         
         NSLog(@"\nTest Directory...");
         testDirectory();
+        
+        NSLog(@"Test URL...");
+        testURL();
         
     }
     return 0;
@@ -256,4 +260,14 @@ void testDirectory() {
     dirList = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     
     NSLog(@"Documents:\n%@", dirList);
+}
+
+void testURL() {
+    NSURL *url = [NSURL URLWithString:@"http://www.163.com"];
+    NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding (kCFStringEncodingGB_18030_2000);    //GB2312,GBK
+    NSError * err;
+    
+    NSString *content = [NSString stringWithContentsOfURL:url encoding:encoding error:&err];
+    
+    NSLog(@"\n%@ Contents: \n%@, Error: %@", url, content, err);
 }
