@@ -41,4 +41,17 @@
     NSLog(@"Width: %i, Height: %i", width, height);
 }
 
+-(void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:origin forKey:@"origin"];
+    [aCoder encodeInt:width forKey:@"width"];
+    [aCoder encodeInt:height forKey:@"height"];
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    origin = [aDecoder decodeObjectForKey:@"origin"];
+    width = [aDecoder decodeIntForKey:@"width"];
+    height = [aDecoder decodeIntForKey:@"height"];
+    return self;
+}
+
 @end

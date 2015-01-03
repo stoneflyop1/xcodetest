@@ -11,7 +11,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Point2D : NSObject <NSCopying>
+@interface Point2D : NSObject <NSCopying, NSCoding>
 
 @property int x, y;
 

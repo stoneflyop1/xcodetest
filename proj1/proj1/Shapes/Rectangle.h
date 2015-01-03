@@ -13,7 +13,7 @@
 
 @class Point2D;
 
-@interface Rectangle : NSObject
+@interface Rectangle : NSObject <NSCoding>
 
 @property int width, height;
 @property (copy, nonatomic) Point2D* origin;
